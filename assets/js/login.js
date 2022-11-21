@@ -46,19 +46,15 @@ $(function () {
       username: $('#form_reg [name=username]').val(),
       password: $('#form_reg [name=password]').val()
     }
-    $.post(
-      'http://api-breakingnews-web.itheima.net/api/reguser',
-      data,
-      function (res) {
-        // console.log(res)
-        if (res.status !== 0) {
-          return layer.msg(res.message)
-        }
-        layer.msg('恭喜你，注册成功！请登录')
-        // 模拟 去登录 按钮的点击行为
-        $('#link_login').click()
+    $.post('/api/reguser', data, function (res) {
+      // console.log(res)
+      if (res.status !== 0) {
+        return layer.msg(res.message)
       }
-    )
+      layer.msg('恭喜你，注册成功！请登录')
+      // 模拟 去登录 按钮的点击行为
+      $('#link_login').click()
+    })
   })
 
   //监听登录表单的提交事件
@@ -67,7 +63,7 @@ $(function () {
     e.preventDefault()
     // 2.发起ajax请求
     $.ajax({
-      url: 'http://api-breakingnews-web.itheima.net/api/login',
+      url: '/api/login',
       method: 'POST',
       // 快速获取表单中数据
       data: $(this).serialize(),
@@ -80,7 +76,7 @@ $(function () {
         //将登录成功得到的 token 字符串，存到localStorage
         localStorage.setItem('token', res.token)
         // 跳转到后台主页
-        // location.href = '/index.html'
+        location.href = '/index.html'
       }
     })
   })
